@@ -134,11 +134,11 @@
         mode: "basic",
         operation: "keyup",
         default_values: {
-            amount: "$7,500",
+            amount: "$17,500",
             down: "$0",
-            rate: "7%",
+            rate: "3.6%",
             rate_compare: "1.49%",
-            term: "36m"
+            term: "3"
         },
         field_titles: {
             amount: "Loan Amount",
@@ -153,14 +153,11 @@
             down: "in dollars",
             rate: "",
             rate_compare: "",
-            term: "Format: 12m, 36m, 3y, 7y"
+            term: "in years"
         },
         response_output_div: ".results",
         response_basic: 
-            '<p><strong>Monthly Payment:</strong><br />$%payment_amount%</p>'+
-            '<p><strong>Number of Payments:</strong><br />%num_payments%</p>'+
-            '<p><strong>Total Payments:</strong><br />$%total_payments%</p>'+
-            '<p><strong>Total Interest:</strong><br />$%total_interest%</p>',
+            '<p><strong>Monthly Payment:</strong><br />$%payment_amount%</p>',
         response_compare: '<p class="total-savings">Save $%savings% in interest!</p>',
         error_text: '<p class="error">Please fill in all fields.</p>',
         callback: function ( elem, data ){}
@@ -418,12 +415,8 @@
             rate = ( typeof( input.rate )!=="undefined" ? input.rate : 0 ).toString().replace(/[^\d.]/ig, ''),
             term = ( typeof( input.term )!=="undefined" ? input.term : 0 ),
             down = ( typeof( input.down )!=="undefined" ? input.down : 0).toString().replace(/[^\d.]/ig, '');
-        // parse year values passed into the term value
-        if ( term.match("y") ) {
-            term = parseInt( term.replace(/[^\d.]/ig, ''), 10 )*12;
-        } else {
-            term = parseInt( term.replace(/[^\d.]/ig, ''), 10 );
-        }
+        // parse year values passed into the term value (only accept term in years)
+        term = parseInt( term.replace(/[^\d.]/ig, ''), 10 )*12;
 
         // process the input values
         var monthly_interest = rate / 100 / 12;
